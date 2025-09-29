@@ -1,5 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
+import { Button } from "./components/ui/Button";
+import { Input } from "./components/ui/Input";
+import { Label } from "./components/ui/Label";
+import { Card, CardContent } from "./components/ui/Card";
+import { Spinner } from "./components/ui/Spinner";
 
 export default function App() {
     const [form, setForm] = useState({
@@ -60,46 +65,95 @@ export default function App() {
         setError("");
     };
 
+    const fieldLabels = {
+        name: "Full Name",
+        email: "Email Address", 
+        companyName: "Company Name",
+        companyUrl: "Company Website"
+    };
+
+    const fieldTypes = {
+        name: "text",
+        email: "email",
+        companyName: "text", 
+        companyUrl: "url"
+    };
+
     return (
-        <div className="max-w-5xl mx-auto p-6 bg-gray-50 min-h-screen">
-            <h1 className="text-4xl font-bold mb-6 text-center text-gray-800">
-                Company Details Lookup
-            </h1>
+        <div className="min-h-screen bg-gradient-subtle">
+            <div className="max-w-4xl mx-auto p-6">
+                <div className="text-center mb-8">
+                    <h1 className="text-4xl font-bold mb-3 bg-gradient-primary bg-clip-text text-transparent">
+                        Company Details Lookup
+                    </h1>
+                    <p className="text-muted-foreground text-lg">
+                        Discover comprehensive insights about any company
+                    </p>
+                </div>
 
-            {!companyData && (
-                <form
-                    onSubmit={handleSubmit}
-                    className="space-y-4 bg-white p-6 rounded shadow-md">
-                    {["name", "email", "companyName", "companyUrl"].map((f) => (
-                        <input
-                            key={f}
-                            name={f}
-                            placeholder={f.charAt(0).toUpperCase() + f.slice(1)}
-                            value={form[f]}
-                            onChange={handleChange}
-                            className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            required
-                        />
-                    ))}
-                    <button className="w-full py-3 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition">
-                        Submit
-                    </button>
-                </form>
-            )}
+                {!companyData && (
+                    <Card className="max-w-2xl mx-auto animate-in">
+                        <CardContent className="p-8">
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {["name", "email", "companyName", "companyUrl"].map((field) => (
+                                        <div key={field} className="space-y-2">
+                                            <Label htmlFor={field} required>
+                                                {fieldLabels[field]}
+                                            </Label>
+                                            <Input
+                                                id={field}
+                                                name={field}
+                                                type={fieldTypes[field]}
+                                                value={form[field]}
+                                                onChange={handleChange}
+                                                placeholder={`Enter ${fieldLabels[field].toLowerCase()}`}
+                                                disabled={loading}
+                                                required
+                                                className="transition-all duration-200"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                                
+                                <Button 
+                                    type="submit" 
+                                    className="w-full text-lg py-6" 
+                                    size="lg"
+                                    loading={loading}
+                                    disabled={loading}
+                                >
+                                    {loading ? "Analyzing Company..." : "Get Company Insights"}
+                                </Button>
+                            </form>
+                        </CardContent>
+                    </Card>
+                )}
 
-            {loading && (
-                <p className="mt-6 text-center text-blue-600 font-medium">
-                    Fetching company data...
-                </p>
-            )}
-            {error && (
-                <p className="mt-6 text-center text-red-600 font-medium">
-                    {error}
-                </p>
-            )}
+                {loading && (
+                    <Card className="max-w-2xl mx-auto mt-6 animate-in">
+                        <CardContent className="p-8 text-center">
+                            <Spinner size="lg" className="mx-auto mb-4 text-primary" />
+                            <h3 className="text-lg font-semibold mb-2">Processing Your Request</h3>
+                            <p className="text-muted-foreground">
+                                Analyzing company data and gathering insights...
+                            </p>
+                        </CardContent>
+                    </Card>
+                )}
+                
+                {error && (
+                    <Card className="max-w-2xl mx-auto mt-6 border-destructive animate-in">
+                        <CardContent className="p-6 text-center">
+                            <div className="text-destructive mb-2">⚠️</div>
+                            <h3 className="text-lg font-semibold text-destructive mb-2">Error</h3>
+                            <p className="text-muted-foreground">{error}</p>
+                        </CardContent>
+                    </Card>
+                )}
 
-            {companyData && (
-                <div className="mt-8">
+                {companyData && (
+                    <div className="mt-8">
                     <button
                         onClick={handleClear}
                         className="mb-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">
@@ -220,7 +274,8 @@ export default function App() {
                         </div>
                     </div>
                 </div>
-            )}
+                )}
+            </div>
         </div>
     );
 }
