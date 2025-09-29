@@ -6,6 +6,7 @@ import { Label } from "./components/ui/Label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./components/ui/Card";
 import { Badge } from "./components/ui/Badge";
 import { Spinner } from "./components/ui/Spinner";
+import { safeUrl } from "./utils/safeUrl";
 
 export default function App() {
     const [form, setForm] = useState({
@@ -197,9 +198,9 @@ export default function App() {
                                     </div>
                                     
                                     <div className="flex flex-col gap-3 pt-4 border-t">
-                                        {companyData.website && (
+                                        {companyData.website && safeUrl(companyData.website) && (
                                             <a
-                                                href={companyData.website}
+                                                href={safeUrl(companyData.website)}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
@@ -207,9 +208,9 @@ export default function App() {
                                                 🌐 Website
                                             </a>
                                         )}
-                                        {companyData.linkedin && (
+                                        {companyData.linkedin && safeUrl(companyData.linkedin) && (
                                             <a
-                                                href={companyData.linkedin}
+                                                href={safeUrl(companyData.linkedin)}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
