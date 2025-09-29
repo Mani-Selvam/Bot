@@ -10,7 +10,8 @@
     "scripts": {
         "start:server": "cd server && node index.js",
         "start:client": "cd client && npm run dev",
-        "start": "concurrently \"npm run start:server\" \"npm run start:client\""
+        "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
+        "build:prod": "cd client && npm run build"
     },
     "devDependencies": {
         "nodemon": "^3.1.10"
