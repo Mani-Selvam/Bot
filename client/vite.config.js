@@ -6,9 +6,12 @@ export default defineConfig({
     server: {
         host: "0.0.0.0",
         port: 5000,
-        allowedHosts: "all",
+        allowedHosts: true,
         proxy: {
             "/api": "http://localhost:5001",
         },
+    },
+    preview: {
+        allowedHosts: true,
     },
 });
