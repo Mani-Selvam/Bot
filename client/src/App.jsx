@@ -28,7 +28,7 @@ export default function App() {
         while (attempts < maxAttempts) {
             try {
                 const res = await axios.get(
-                    `/api/company/${form.companyName}`
+                    `/api/company/${encodeURIComponent(form.companyName)}`
                 );
                 return res.data;
             } catch {
@@ -254,8 +254,8 @@ export default function App() {
 
                         </div>
 
-                            {/* Services & References Card - Full Width */}
-                            <Card className="animate-in lg:col-span-2">
+                        {/* Services & References Card - Full Width */}
+                        <Card className="animate-in lg:col-span-2">
                                 <CardHeader>
                                     <CardTitle className="text-xl">Services & References</CardTitle>
                                     <CardDescription>
@@ -290,8 +290,8 @@ export default function App() {
                                 </CardContent>
                             </Card>
 
-                            {/* AI Analysis & Metadata Card */}
-                            <Card className="animate-in lg:col-span-2">
+                        {/* AI Analysis & Metadata Card */}
+                        <Card className="animate-in lg:col-span-2">
                                 <CardHeader>
                                     <CardTitle className="text-xl flex items-center gap-2">
                                         🤖 AI Analysis Summary
