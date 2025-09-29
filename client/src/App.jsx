@@ -22,7 +22,7 @@ export default function App() {
         while (attempts < maxAttempts) {
             try {
                 const res = await axios.get(
-                    `http://localhost:5000/api/company/${form.companyName}`
+                    `/api/company/${form.companyName}`
                 );
                 return res.data;
             } catch {
@@ -41,7 +41,7 @@ export default function App() {
 
         try {
             // Submit user input to your backend → triggers n8n workflow
-            await axios.post("http://localhost:5000/api/submit", form);
+            await axios.post("/api/submit", form);
 
             // Wait and fetch data
             const data = await fetchCompany();
