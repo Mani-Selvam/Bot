@@ -3,7 +3,8 @@ import axios from "axios";
 import { Button } from "./components/ui/Button";
 import { Input } from "./components/ui/Input";
 import { Label } from "./components/ui/Label";
-import { Card, CardContent } from "./components/ui/Card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./components/ui/Card";
+import { Badge } from "./components/ui/Badge";
 import { Spinner } from "./components/ui/Spinner";
 
 export default function App() {
@@ -153,127 +154,183 @@ export default function App() {
                 )}
 
                 {companyData && (
-                    <div className="mt-8">
-                    <button
-                        onClick={handleClear}
-                        className="mb-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">
-                        Clear / Search Another
-                    </button>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* General Info Card */}
-                        <div className="p-6 bg-white rounded shadow hover:shadow-lg transition">
-                            <h2 className="text-2xl font-bold mb-4">
-                                {companyData.name}
-                            </h2>
-                            <p>
-                                <span className="font-semibold">
-                                    Founded Year:
-                                </span>{" "}
-                                {companyData.foundedYear}
-                            </p>
-                            <p>
-                                <span className="font-semibold">Industry:</span>{" "}
-                                {companyData.industry}
-                            </p>
-                            <p>
-                                <span className="font-semibold">Location:</span>{" "}
-                                {companyData.location}
-                            </p>
-                            <p>
-                                <span className="font-semibold">Size:</span>{" "}
-                                {companyData.size}
-                            </p>
-                            <p>
-                                <span className="font-semibold">Website:</span>{" "}
-                                <a
-                                    href={companyData.website}
-                                    target="_blank"
-                                    className="text-blue-600 underline">
-                                    {companyData.website}
-                                </a>
-                            </p>
-                            <p>
-                                <span className="font-semibold">LinkedIn:</span>{" "}
-                                <a
-                                    href={companyData.linkedin}
-                                    target="_blank"
-                                    className="text-blue-600 underline">
-                                    {companyData.linkedin}
-                                </a>
-                            </p>
+                    <div className="mt-8 animate-up">
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-2xl font-bold text-foreground">Company Analysis Results</h2>
+                            <Button
+                                onClick={handleClear}
+                                variant="outline"
+                                size="sm"
+                            >
+                                🔄 New Search
+                            </Button>
                         </div>
 
-                        {/* Reviews & Ratings Card */}
-                        <div className="p-6 bg-white rounded shadow hover:shadow-lg transition">
-                            <h2 className="text-xl font-bold mb-4">
-                                Reviews & Ratings
-                            </h2>
-                            <p>
-                                <span className="font-semibold">Rating:</span>{" "}
-                                {companyData.rating}
-                            </p>
-                            <p>
-                                <span className="font-semibold">
-                                    Review Source:
-                                </span>{" "}
-                                {companyData.reviewSource}
-                            </p>
-                            <p>
-                                <span className="font-semibold text-green-600">
-                                    Pros:
-                                </span>{" "}
-                                {companyData.pros}
-                            </p>
-                            <p>
-                                <span className="font-semibold text-red-600">
-                                    Cons:
-                                </span>{" "}
-                                {companyData.cons}
-                            </p>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            {/* Company Overview Card */}
+                            <Card className="animate-in">
+                                <CardHeader>
+                                    <div className="flex items-start justify-between">
+                                        <div>
+                                            <CardTitle className="text-xl mb-2">{companyData.name}</CardTitle>
+                                            <div className="flex flex-wrap gap-2 mb-2">
+                                                {companyData.industry && (
+                                                    <Badge variant="secondary">{companyData.industry}</Badge>
+                                                )}
+                                                {companyData.size && (
+                                                    <Badge variant="outline">{companyData.size}</Badge>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <div className="grid grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <span className="text-muted-foreground block">Founded</span>
+                                            <span className="font-medium">{companyData.foundedYear || "Unknown"}</span>
+                                        </div>
+                                        <div>
+                                            <span className="text-muted-foreground block">Location</span>
+                                            <span className="font-medium">{companyData.location || "Unknown"}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex flex-col gap-3 pt-4 border-t">
+                                        {companyData.website && (
+                                            <a
+                                                href={companyData.website}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+                                            >
+                                                🌐 Website
+                                            </a>
+                                        )}
+                                        {companyData.linkedin && (
+                                            <a
+                                                href={companyData.linkedin}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+                                            >
+                                                💼 LinkedIn
+                                            </a>
+                                        )}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            {/* Reviews & Ratings Card */}
+                            <Card className="animate-in">
+                                <CardHeader>
+                                    <CardTitle className="text-xl">Reviews & Ratings</CardTitle>
+                                    {companyData.rating && (
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-2xl font-bold text-primary">{companyData.rating}</span>
+                                            <Badge variant="secondary">{companyData.reviewSource}</Badge>
+                                        </div>
+                                    )}
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    {companyData.pros && (
+                                        <div className="p-4 bg-success/5 border border-success/20 rounded-lg">
+                                            <h4 className="font-semibold text-success mb-2 flex items-center gap-2">
+                                                ✅ Strengths
+                                            </h4>
+                                            <p className="text-sm text-muted-foreground">{companyData.pros}</p>
+                                        </div>
+                                    )}
+                                    {companyData.cons && (
+                                        <div className="p-4 bg-destructive/5 border border-destructive/20 rounded-lg">
+                                            <h4 className="font-semibold text-destructive mb-2 flex items-center gap-2">
+                                                ⚠️ Areas for Improvement
+                                            </h4>
+                                            <p className="text-sm text-muted-foreground">{companyData.cons}</p>
+                                        </div>
+                                    )}
+                                </CardContent>
+                            </Card>
+
                         </div>
 
-                        {/* Services Card */}
-                        <div className="p-6 bg-white rounded shadow hover:shadow-lg transition md:col-span-2">
-                            <h2 className="text-xl font-bold mb-4">
-                                Services & References
-                            </h2>
-                            <p>
-                                <span className="font-semibold">Services:</span>{" "}
-                                {companyData.services}
-                            </p>
-                            <p>
-                                <span className="font-semibold">
-                                    References:
-                                </span>{" "}
-                                {companyData.references}
-                            </p>
-                        </div>
+                            {/* Services & References Card - Full Width */}
+                            <Card className="animate-in lg:col-span-2">
+                                <CardHeader>
+                                    <CardTitle className="text-xl">Services & References</CardTitle>
+                                    <CardDescription>
+                                        Business offerings and professional references
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent className="space-y-6">
+                                    {companyData.services && (
+                                        <div>
+                                            <h4 className="font-semibold mb-3 flex items-center gap-2">
+                                                🎯 Services Offered
+                                            </h4>
+                                            <div className="p-4 bg-muted/50 rounded-lg">
+                                                <p className="text-sm text-muted-foreground leading-relaxed">
+                                                    {companyData.services}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
+                                    {companyData.references && (
+                                        <div>
+                                            <h4 className="font-semibold mb-3 flex items-center gap-2">
+                                                📋 References
+                                            </h4>
+                                            <div className="p-4 bg-muted/50 rounded-lg">
+                                                <p className="text-sm text-muted-foreground leading-relaxed">
+                                                    {companyData.references}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
+                                </CardContent>
+                            </Card>
 
-                        {/* Metadata Card */}
-                        <div className="p-6 bg-white rounded shadow hover:shadow-lg transition md:col-span-2">
-                            <h2 className="text-xl font-bold mb-4">
-                                Other Details
-                            </h2>
-                            <p>
-                                <span className="font-semibold">
-                                    Timestamp:
-                                </span>{" "}
-                                {companyData.timestamp}
-                            </p>
-                            <p>
-                                <span className="font-semibold">Summary:</span>{" "}
-                                {companyData.summary}
-                            </p>
-                            <p>
-                                <span className="font-semibold">
-                                    Embedding:
-                                </span>{" "}
-                                [{companyData.embedding.join(", ")}]
-                            </p>
-                        </div>
+                            {/* AI Analysis & Metadata Card */}
+                            <Card className="animate-in lg:col-span-2">
+                                <CardHeader>
+                                    <CardTitle className="text-xl flex items-center gap-2">
+                                        🤖 AI Analysis Summary
+                                    </CardTitle>
+                                    <CardDescription>
+                                        Generated insights and analysis metadata
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    {companyData.summary && (
+                                        <div>
+                                            <h4 className="font-semibold mb-2">Executive Summary</h4>
+                                            <div className="p-4 bg-accent/5 border border-accent/20 rounded-lg">
+                                                <p className="text-sm text-muted-foreground leading-relaxed">
+                                                    {companyData.summary}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
+                                    
+                                    <div className="pt-4 border-t">
+                                        <div className="flex items-center justify-between text-xs text-muted-foreground">
+                                            <span>Analysis Date</span>
+                                            <span>{companyData.timestamp ? new Date(companyData.timestamp).toLocaleDateString() : "Unknown"}</span>
+                                        </div>
+                                        {companyData.embedding && (
+                                            <details className="mt-2">
+                                                <summary className="cursor-pointer text-xs text-muted-foreground hover:text-foreground">
+                                                    View Technical Data
+                                                </summary>
+                                                <div className="mt-2 p-2 bg-muted rounded text-xs font-mono break-all">
+                                                    Vector: [{companyData.embedding.slice(0, 5).join(", ")}...] ({companyData.embedding.length} dimensions)
+                                                </div>
+                                            </details>
+                                        )}
+                                    </div>
+                                </CardContent>
+                            </Card>
                     </div>
-                </div>
                 )}
             </div>
         </div>
