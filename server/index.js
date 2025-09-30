@@ -19,9 +19,18 @@ app.use(express.json());
 // MongoDB connection
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
-await client.connect();
-const db = client.db("Bot");
-const BotData = db.collection("BotData");
+
+let BotData;
+
+try {
+    await client.connect();
+    const db = client.db("Bot");
+    BotData = db.collection("BotData");
+    console.log('MongoDB connected successfully');
+} catch (err) {
+    console.error('[ERROR] MongoDB connection failed:', err.message);
+    process.exit(1);
+}
 
 // Submit form → send to n8n webhook
 app.post("/api/submit", async (req, res) => {
@@ -81,35 +90,57 @@ app.get("/api/company/:companyName", async (req, res) => {
     console.log(`[API] Searching for company: "${companyName}"`);
 
     try {
-        // Case-insensitive regex search that works with both string and array fields
-        const searchRegex = new RegExp(`^${companyName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i');
-        const rawCompany = await BotData.findOne(
-            { name: searchRegex },
-            {
-                projection: {
-                    _id: 0,
-                    name: 1,
-                    foundedYear: 1,
-                    industry: 1,
-                    location: 1,
-                    size: 1,
-                    email: 1,
-                    phone: 1,
-                    website: 1,
-                    linkedin: 1,
-                    rating: 1,
-                    reviewSource: 1,
-                    pros: 1,
-                    cons: 1,
-                    services: 1,
-                    references: 1,
-                    topReferences: 1,
-                    timestamp: 1,
-                    embedding: 1,
-                    summary: 1,
-                },
+        // Case-insensitive search with multiple strategies
+        const projection = {
+            projection: {
+                _id: 0,
+                name: 1,
+                foundedYear: 1,
+                industry: 1,
+                location: 1,
+                size: 1,
+                email: 1,
+                phone: 1,
+                website: 1,
+                linkedin: 1,
+                rating: 1,
+                reviewSource: 1,
+                pros: 1,
+                cons: 1,
+                services: 1,
+                references: 1,
+                topReferences: 1,
+                timestamp: 1,
+                embedding: 1,
+                summary: 1,
             },
-        );
+        };
+        
+        // Try 1: Exact match
+        const escapedName = companyName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const exactRegex = new RegExp(`^${escapedName}$`, 'i');
+        let rawCompany = await BotData.findOne({ name: exactRegex }, projection);
+        
+        // Try 2: Search term contains DB name (e.g., "Neophron Tech" contains "Neophron")
+        if (!rawCompany) {
+            const allCompanies = await BotData.find({}, { projection: { name: 1 } }).toArray();
+            const matchingCompany = allCompanies.find(company => {
+                if (company.name && typeof company.name === 'string') {
+                    return companyName.toLowerCase().includes(company.name.toLowerCase());
+                }
+                return false;
+            });
+            
+            if (matchingCompany) {
+                rawCompany = await BotData.findOne({ _id: matchingCompany._id }, projection);
+            }
+        }
+        
+        // Try 3: DB name contains search term (e.g., "Neophron" contains "Neo")
+        if (!rawCompany) {
+            const partialRegex = new RegExp(escapedName, 'i');
+            rawCompany = await BotData.findOne({ name: partialRegex }, projection);
+        }
 
         if (!rawCompany) {
             console.log(`[API] Company not found in database: "${companyName}"`);
