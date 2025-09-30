@@ -3,14 +3,15 @@
 ## Overview
 A full-stack React + Express.js application that allows users to submit company information through a form, processes it via an n8n webhook, and displays detailed company reviews and information in a dashboard.
 
-## Recent Changes (Sep 29, 2025)
-- **Project Import**: Successfully imported from GitHub and configured for Replit environment
-- **Port Configuration**: Fixed port conflicts by moving backend to port 5001, frontend to port 5000
-- **API Endpoints**: Updated hardcoded localhost URLs to use relative paths for Replit proxy compatibility
-- **Vite Configuration**: Configured to bind to 0.0.0.0:5000 and allow all hosts for Replit's iframe proxy
-- **Dependencies**: Installed all required packages for both client and server
+## Recent Changes (Sep 30, 2025)
+- **Project Import**: Successfully re-imported from GitHub and configured for Replit environment
+- **Dependencies**: Installed all required packages for root, client, and server
+- **ES Modules Configuration**: Added "type": "module" to both client and server package.json files
 - **Workflow Setup**: Configured "Full Stack App" workflow to run both frontend and backend simultaneously
 - **Deployment Config**: Setup for autoscale deployment with production build process
+- **Vite Configuration**: Already configured to bind to 0.0.0.0:5000 and allow all hosts for Replit's iframe proxy
+- **Port Configuration**: Backend on port 5001, frontend on port 5000
+- **.gitignore**: Created proper .gitignore for Node.js/React project
 
 ## Project Architecture
 
