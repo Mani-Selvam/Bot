@@ -3,14 +3,16 @@ import express from "express";
 import { MongoClient } from "mongodb";
 import cors from "cors";
 import axios from "axios";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
-const uri =
-    "mongodb+srv://maniselvam2023_db_user:admin123@cluster0.56hfpir.mongodb.net/Bot?retryWrites=true&w=majority&appName=Cluster0";
+const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 await client.connect();
 const db = client.db("Bot");
@@ -22,15 +24,12 @@ app.post("/api/submit", async (req, res) => {
 
     try {
         // Send data to n8n webhook
-        await axios.post(
-            "https://techworld001.app.n8n.cloud/webhook-test/tech",
-            {
-                name,
-                email,
-                companyName,
-                companyUrl,
-            }
-        );
+        await axios.post(process.env.N8N_WEBHOOK_URL, {
+            name,
+            email,
+            companyName,
+            companyUrl,
+        });
         res.json({ status: "submitted" });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -66,7 +65,7 @@ app.get("/api/company/:companyName", async (req, res) => {
                     embedding: 1,
                     summary: 1,
                 },
-            }
+            },
         );
 
         if (!company)
@@ -78,4 +77,5 @@ app.get("/api/company/:companyName", async (req, res) => {
     }
 });
 
-app.listen(5001, () => console.log("Server running on port 5001"));
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
