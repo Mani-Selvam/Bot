@@ -5,52 +5,31 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --primary: 238 74% 60%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --success: 142 76% 36%;
-    --success-foreground: 210 40% 98%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 240 10% 3.9%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 238 74% 60%;
-    --radius: 0.75rem;
-  }
-
-  .dark {
-    --background: 240 10% 3.9%;
+    --background: 220 18% 12%;
     --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
+    --card: 220 18% 16%;
     --card-foreground: 0 0% 98%;
-    --primary: 238 74% 60%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 240 3.7% 15.9%;
+    --primary: 165 82% 51%;
+    --primary-foreground: 220 18% 12%;
+    --secondary: 220 15% 25%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --muted: 220 15% 20%;
+    --muted-foreground: 220 10% 65%;
+    --accent: 165 82% 51%;
+    --accent-foreground: 220 18% 12%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --success: 142 70% 45%;
-    --success-foreground: 210 40% 98%;
+    --success: 165 82% 51%;
+    --success-foreground: 220 18% 12%;
     --warning: 38 92% 50%;
-    --warning-foreground: 240 10% 3.9%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 238 74% 60%;
+    --warning-foreground: 220 18% 12%;
+    --border: 220 15% 25%;
+    --input: 220 15% 20%;
+    --ring: 165 82% 51%;
+    --radius: 0.75rem;
+    --form-bg: 0 0% 100%;
+    --form-fg: 220 18% 12%;
+    --dark-navy: 230 35% 15%;
   }
 }
 
@@ -97,15 +76,6 @@
 }
 
 @layer components {
-  /* Animation utilities */
-  .animate-in {
-    @apply animate-fade-in;
-  }
-  
-  .animate-up {
-    @apply animate-slide-up;
-  }
-
   /* Gradient backgrounds */
   .bg-gradient-primary {
     background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
