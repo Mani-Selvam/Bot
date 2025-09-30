@@ -12,6 +12,9 @@ A full-stack React + Express.js application that allows users to submit company 
 - **Static File Serving**: Added production mode support - server serves built React app from /client/dist
 - **Deployment Config**: Setup for VM deployment with build and run scripts
 - **Port Configuration**: Backend on localhost:5001, frontend on 0.0.0.0:5000
+- **Database Search Fix**: Implemented multi-strategy search (exact + partial matching) to handle name variations from n8n workflow
+- **UI Enhancement**: Added advanced animations including staggered form field animations, glowing effects, card transitions, and hover effects
+- **Animation Fix**: Corrected animation timing using inline styles for proper staggered delays across form and results sections
 
 ## Project Architecture
 
