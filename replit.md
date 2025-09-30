@@ -6,12 +6,12 @@ A full-stack React + Express.js application that allows users to submit company 
 ## Recent Changes (Sep 30, 2025)
 - **Project Import**: Successfully imported from GitHub and configured for Replit environment
 - **Dependencies**: Installed all required packages for root, client, and server directories
-- **MongoDB Data Transformation**: Added cleanMongoData() helper to handle MongoDB's array structure with null values
-- **Field Mapping**: Server now maps topReferences field to references for frontend compatibility
-- **Workflow Setup**: Configured "Full Stack App" workflow to run both frontend and backend simultaneously
-- **Deployment Config**: Setup for autoscale deployment with production build process
-- **Vite Configuration**: Verified binding to 0.0.0.0:5000 with allowedHosts enabled for Replit's iframe proxy
-- **Port Configuration**: Backend on port 5001 (localhost), frontend on port 5000 (0.0.0.0)
+- **Backend Configuration**: Updated server to bind to localhost (backend should not use 0.0.0.0)
+- **Frontend Configuration**: Vite configured with host 0.0.0.0:5000 and allowedHosts enabled for Replit's iframe proxy
+- **Workflow Setup**: Configured "Full Stack App" workflow using concurrently to run both frontend and backend
+- **Static File Serving**: Added production mode support - server serves built React app from /client/dist
+- **Deployment Config**: Setup for VM deployment with build and run scripts
+- **Port Configuration**: Backend on localhost:5001, frontend on 0.0.0.0:5000
 
 ## Project Architecture
 
@@ -60,9 +60,9 @@ A full-stack React + Express.js application that allows users to submit company 
 4. Backend connects to external MongoDB for data persistence
 
 ## Deployment
-- **Target**: Autoscale (stateless web application)
-- **Build**: `npm run build:prod` (builds React frontend)
-- **Run**: `npm start` (runs both frontend and backend)
+- **Target**: VM (maintains MongoDB connection state)
+- **Build**: `cd client && npm run build` (builds React frontend to dist/)
+- **Run**: `cd server && PORT=5000 node index.js` (serves both API and static files on port 5000)
 
 ## User Preferences
 - Keep existing MongoDB setup rather than migrating to PostgreSQL

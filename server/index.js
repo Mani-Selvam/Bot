@@ -4,6 +4,11 @@ import { MongoClient } from "mongodb";
 import cors from "cors";
 import axios from "axios";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -142,6 +147,15 @@ app.get("/api/company/:companyName", async (req, res) => {
         console.error(`[API] Error fetching company:`, err.message);
         res.status(500).json({ error: err.message });
     }
+});
+
+// Serve static files from the React app in production
+const clientBuildPath = path.join(__dirname, '../client/dist');
+app.use(express.static(clientBuildPath));
+
+// All other routes should serve the React app
+app.get('*', (req, res) => {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
 });
 
 const PORT = process.env.PORT || 5001;
