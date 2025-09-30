@@ -1,0 +1,153 @@
+id
+68db8fdf8abfd60247d22f66
+name
+"Neophron (India) - Solar EPC Solutions"
+Neophron (India) - Solar EPC Solutions
+null
+foundedYear
+"2017"
+industry
+"Renewable Energy, Solar Energy, Solar EPC (Engineering, Procurement, C…"
+Renewable Energy
+null
+Solar Energy
+null
+Solar EPC (Engineering
+null
+Procurement
+null
+Construction)
+null
+Solar Project Development
+null
+Solar Product Manufacturing
+null
+location
+"Head Office: Plot No. 177, Flat No. G-1, Sai Kuteer, Near BDL Gate No.…"
+Head Office: Plot No. 177
+null
+Flat No. G-1
+null
+Sai Kuteer
+null
+Near BDL Gate No. 2
+null
+Kanchanbagh
+null
+Hyderabad
+null
+Telangana 500058
+null
+India. Branch Office: Karnataka. Factory: Telangana.
+null
+size
+"11-50 employees (as per LinkedIn for 'Neophron India Solar EPC Solutio…"
+11-50 employees (as per LinkedIn for 'Neophron India Solar EPC Solutions')
+null
+services
+"Solar Rooftop Solutions (for Residential, Commercial, and Industrial s…"
+Solar Rooftop Solutions (for Residential
+null
+Commercial
+null
+and Industrial sectors)
+null
+Utility Scale Solar Solutions (Large-scale ground-mounted projects)
+null
+Solar Street Lights
+null
+Solar Water Pumps (for agricultural and domestic use)
+null
+Solar Water Heaters
+null
+Operations & Maintenance (O&M) Services for Solar Plants (preventive and corrective maintenance)
+null
+EPC Services (Engineering
+null
+Construction) for Solar Projects (complete project lifecycle management
+null
+from design to commissioning)
+null
+Solar Product Manufacturing (production of solar-related components and systems
+null
+including solar panels
+null
+inverters
+null
+and mounting structures)
+null
+email
+"info@neophron.in, sales@neophron.in"
+info@neophron.in
+null
+sales@neophron.in
+null
+phone
+"+91-7207010203"
++91-7207010203
+null
+website
+"https://neophron.in/"
+https://neophron.in/
+null
+linkedin
+"https://www.linkedin.com/company/neophron-india-solar-epc-solutions/"
+https://www.linkedin.com/company/neophron-india-solar-epc-solutions/
+null
+rating
+"5.0/5 stars"
+5.0/5 stars
+null
+reviewSource
+"Google My Business (based on 7 reviews at the time of data retrieval)"
+Google My Business (based on 7 reviews at the time of data retrieval)
+null
+pros
+"Specialized expertise in solar EPC and a wide range of renewable energ…"
+Specialized expertise in solar EPC and a wide range of renewable energy solutions
+null
+from small-scale rooftop to utility-scale projects. Offers comprehensive
+null
+end-to-end services covering the entire project lifecycle from design and engineering to installation
+null
+commissioning
+null
+and ongoing maintenance. Involvement in solar product manufacturing suggests a commitment to quality control and potentially competitive pricing. Positive (though limited in number) customer feedback indicates satisfaction with their services and project delivery
+null
+highlighting professionalism
+null
+good communication
+null
+and quality work. Focus on diverse client needs including residential
+null
+commercial
+null
+industrial
+null
+and agricultural applications.
+null
+cons
+"As a relatively newer company (founded in 2017), their large-scale pro…"
+As a relatively newer company (founded in 2017)
+null
+their large-scale project portfolio might be less extensive compared to more established players in the solar industry. The limited number of publicly available customer reviews makes it challenging to gauge broad customer satisfaction and consistent service quality across a wider client base. Specific details about the scale of their manufacturing operations
+null
+certifications
+null
+or patented technologies are not extensively highlighted on the website
+null
+potentially requiring direct inquiry for more in-depth information. Primarily operates with a regional focus within Telangana and Karnataka
+null
+though they may undertake projects nationally.
+null
+
+topReferences
+Array (6)
+https://neophron.in/about-us/
+null
+https://neophron.in/services/
+null
+https://neophron.in/contact-us/
+null
+https://www.google.com/search?q=Neophron+India+Solar+EPC+Solutions+reviews
+null

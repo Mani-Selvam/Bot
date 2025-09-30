@@ -76,11 +76,11 @@ app.get("/api/company/:companyName", async (req, res) => {
     console.log(`[API] Searching for company: "${companyName}"`);
 
     try {
-        // Case-insensitive search using collation - fetch all fields
+        // Case-insensitive regex search that works with both string and array fields
+        const searchRegex = new RegExp(`^${companyName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i');
         const rawCompany = await BotData.findOne(
-            { name: companyName },
+            { name: searchRegex },
             {
-                collation: { locale: 'en', strength: 2 },
                 projection: {
                     _id: 0,
                     name: 1,
