@@ -91,46 +91,55 @@ export default function App() {
             {!companyData && !loading && !error && (
                 <div className="min-h-screen flex">
                     {/* Left Side - Dark with Graphics */}
-                    <div className="hidden lg:flex lg:w-1/2 bg-[hsl(var(--dark-navy))] items-center justify-center p-12 relative overflow-hidden">
+                    <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[hsl(var(--dark-navy))] to-[#0a0e1a] items-center justify-center p-12 relative overflow-hidden">
+                        {/* Animated Background Elements */}
                         <div className="absolute inset-0 opacity-10">
-                            <div className="absolute top-20 left-20 w-32 h-32 border-2 border-primary rounded-full animate-pulse"></div>
+                            <div className="absolute top-20 left-20 w-32 h-32 border-2 border-primary rounded-full animate-pulse animate-float"></div>
                             <div className="absolute top-40 right-32 w-24 h-24 border-2 border-primary rounded-lg rotate-45 animate-pulse" style={{animationDelay: '0.5s'}}></div>
                             <div className="absolute bottom-32 left-40 w-20 h-20 border-2 border-primary rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
                             <div className="absolute bottom-20 right-20 w-28 h-28 border-2 border-primary rounded-lg rotate-12 animate-pulse" style={{animationDelay: '1.5s'}}></div>
                         </div>
-                        <div className="relative z-10 text-center max-w-md">
+                        
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-accent/5"></div>
+                        
+                        <div className="relative z-10 text-center max-w-md animate-fade-in-scale">
                             <div className="mb-8 flex justify-center">
-                                <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-primary/30">
-                                    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div className="w-28 h-28 bg-gradient-to-br from-primary/30 to-accent/20 rounded-full flex items-center justify-center backdrop-blur-md border-2 border-primary/40 shadow-2xl animate-glow">
+                                    <svg className="w-14 h-14 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                     </svg>
                                 </div>
                             </div>
-                            <h2 className="text-3xl font-bold text-white mb-4">
+                            <h2 className="text-4xl font-bold text-white mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                                 Discover Company Intelligence
                             </h2>
-                            <p className="text-gray-300 leading-relaxed">
+                            <p className="text-gray-300 leading-relaxed text-lg">
                                 Access comprehensive company insights powered by AI. Get detailed analysis, ratings, services, and professional references in seconds.
                             </p>
                         </div>
                     </div>
 
                     {/* Right Side - Form */}
-                    <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-[hsl(var(--form-bg))]">
+                    <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gradient-to-br from-[hsl(var(--form-bg))] to-gray-50">
                         <div className="w-full max-w-md">
-                            <div className="text-center mb-8">
-                                <h1 className="text-3xl font-bold text-[hsl(var(--form-fg))] mb-2">
+                            <div className="text-center mb-10 animate-fade-in-up">
+                                <h1 className="text-4xl font-bold bg-gradient-to-r from-[hsl(var(--dark-navy))] to-gray-700 bg-clip-text text-transparent mb-3">
                                     Company Details Lookup
                                 </h1>
-                                <p className="text-gray-500">
+                                <p className="text-gray-600 text-lg">
                                     Discover comprehensive insights about any company
                                 </p>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="space-y-5">
-                                {["name", "email", "companyName", "companyUrl"].map((field) => (
-                                    <div key={field} className="space-y-2">
-                                        <Label htmlFor={field} required className="text-[hsl(var(--form-fg))]">
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                {["name", "email", "companyName", "companyUrl"].map((field, index) => (
+                                    <div 
+                                        key={field} 
+                                        className="space-y-2 animate-fade-in-up" 
+                                        style={{ animationDelay: `${(index + 1) * 100}ms`, opacity: 0 }}
+                                    >
+                                        <Label htmlFor={field} required className="text-[hsl(var(--form-fg))] font-medium text-sm">
                                             {fieldLabels[field]}
                                         </Label>
                                         <Input
@@ -142,17 +151,23 @@ export default function App() {
                                             placeholder={`Enter ${fieldLabels[field].toLowerCase()}`}
                                             disabled={loading}
                                             required
-                                            className="bg-gray-50 border-gray-200 text-[hsl(var(--form-fg))] focus:border-primary focus:ring-primary"
+                                            className="bg-white border-2 border-gray-200 text-[hsl(var(--form-fg))] focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 hover:border-gray-300 rounded-xl py-3"
                                         />
                                     </div>
                                 ))}
                                 
                                 <Button 
                                     type="submit" 
-                                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 text-base font-medium rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+                                    className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white py-4 text-base font-semibold rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 mt-8 animate-fade-in-up"
                                     disabled={loading}
+                                    style={{ animationDelay: '500ms', opacity: 0 }}
                                 >
-                                    Get Company Insights
+                                    <span className="flex items-center justify-center gap-2">
+                                        Get Company Insights
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        </svg>
+                                    </span>
                                 </Button>
                             </form>
                         </div>
@@ -190,31 +205,38 @@ export default function App() {
             )}
 
             {companyData && (
-                <div className="min-h-screen p-6">
+                <div className="min-h-screen p-6 bg-gradient-to-br from-background via-background to-muted/20">
                     <div className="max-w-7xl mx-auto">
-                        <div className="flex justify-between items-center mb-8">
-                            <h2 className="text-3xl font-bold text-foreground">Company Analysis Results</h2>
+                        <div className="flex justify-between items-center mb-10 animate-fade-in-up">
+                            <div>
+                                <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">
+                                    Company Analysis Results
+                                </h2>
+                                <p className="text-muted-foreground">Comprehensive insights and analysis</p>
+                            </div>
                             <Button
                                 onClick={handleClear}
-                                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                                className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 rounded-xl px-6 py-3"
                             >
-                                🔄 New Search
+                                <span className="flex items-center gap-2">
+                                    🔄 New Search
+                                </span>
                             </Button>
                         </div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             {/* Company Overview Card */}
-                            <Card className="bg-card border-border">
+                            <Card className="bg-card border-border card-hover animate-fade-in-up shadow-xl backdrop-blur-sm" style={{ animationDelay: '100ms', opacity: 0 }}>
                                 <CardHeader>
                                     <div className="flex items-start justify-between">
                                         <div>
-                                            <CardTitle className="text-2xl mb-3 text-foreground">{companyData.name}</CardTitle>
+                                            <CardTitle className="text-3xl mb-3 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">{companyData.name}</CardTitle>
                                             <div className="flex flex-wrap gap-2 mb-2">
                                                 {companyData.industry && (
-                                                    <Badge className="bg-primary/20 text-primary border-primary/30">{companyData.industry}</Badge>
+                                                    <Badge className="bg-gradient-to-r from-primary/20 to-accent/20 text-primary border-primary/30 px-3 py-1">{companyData.industry}</Badge>
                                                 )}
                                                 {companyData.size && (
-                                                    <Badge variant="outline" className="border-border text-muted-foreground">{companyData.size}</Badge>
+                                                    <Badge variant="outline" className="border-border text-muted-foreground px-3 py-1">{companyData.size}</Badge>
                                                 )}
                                             </div>
                                         </div>
@@ -258,31 +280,31 @@ export default function App() {
                             </Card>
 
                             {/* Reviews & Ratings Card */}
-                            <Card className="bg-card border-border">
+                            <Card className="bg-card border-border card-hover animate-fade-in-up shadow-xl backdrop-blur-sm" style={{ animationDelay: '200ms', opacity: 0 }}>
                                 <CardHeader>
-                                    <CardTitle className="text-2xl text-foreground">Reviews & Ratings</CardTitle>
+                                    <CardTitle className="text-3xl bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Reviews & Ratings</CardTitle>
                                     {companyData.rating && (
-                                        <div className="flex items-center gap-2 mt-2">
-                                            <span className="text-3xl font-bold text-primary">{companyData.rating}</span>
-                                            <Badge className="bg-secondary text-secondary-foreground">{companyData.reviewSource}</Badge>
+                                        <div className="flex items-center gap-3 mt-3">
+                                            <span className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{companyData.rating}</span>
+                                            <Badge className="bg-gradient-to-r from-secondary to-secondary/80 text-secondary-foreground px-3 py-1">{companyData.reviewSource}</Badge>
                                         </div>
                                     )}
                                 </CardHeader>
                                 <CardContent className="space-y-4">
                                     {companyData.pros && (
-                                        <div className="p-4 bg-primary/10 border border-primary/30 rounded-lg">
-                                            <h4 className="font-semibold text-primary mb-2 flex items-center gap-2">
+                                        <div className="p-4 bg-gradient-to-br from-primary/10 to-accent/5 border-2 border-primary/30 rounded-xl hover:border-primary/50 transition-all duration-300">
+                                            <h4 className="font-semibold text-primary mb-2 flex items-center gap-2 text-lg">
                                                 ✅ Strengths
                                             </h4>
-                                            <p className="text-sm text-muted-foreground">{companyData.pros}</p>
+                                            <p className="text-sm text-muted-foreground leading-relaxed">{companyData.pros}</p>
                                         </div>
                                     )}
                                     {companyData.cons && (
-                                        <div className="p-4 bg-destructive/10 border border-destructive/30 rounded-lg">
-                                            <h4 className="font-semibold text-destructive mb-2 flex items-center gap-2">
+                                        <div className="p-4 bg-gradient-to-br from-destructive/10 to-destructive/5 border-2 border-destructive/30 rounded-xl hover:border-destructive/50 transition-all duration-300">
+                                            <h4 className="font-semibold text-destructive mb-2 flex items-center gap-2 text-lg">
                                                 ⚠️ Areas for Improvement
                                             </h4>
-                                            <p className="text-sm text-muted-foreground">{companyData.cons}</p>
+                                            <p className="text-sm text-muted-foreground leading-relaxed">{companyData.cons}</p>
                                         </div>
                                     )}
                                 </CardContent>
@@ -290,20 +312,20 @@ export default function App() {
                         </div>
 
                         {/* Services & References Card - Full Width */}
-                        <Card className="mt-6 bg-card border-border">
+                        <Card className="mt-6 bg-card border-border card-hover animate-fade-in-up shadow-xl backdrop-blur-sm" style={{ animationDelay: '300ms', opacity: 0 }}>
                             <CardHeader>
-                                <CardTitle className="text-2xl text-foreground">Services & References</CardTitle>
-                                <CardDescription className="text-muted-foreground">
+                                <CardTitle className="text-3xl bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">Services & References</CardTitle>
+                                <CardDescription className="text-muted-foreground text-base mt-2">
                                     Business offerings and professional references
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-6">
                                 {companyData.services && (
-                                    <div>
-                                        <h4 className="font-semibold mb-3 flex items-center gap-2 text-foreground">
+                                    <div className="group">
+                                        <h4 className="font-semibold mb-3 flex items-center gap-2 text-foreground text-lg">
                                             🎯 Services Offered
                                         </h4>
-                                        <div className="p-4 bg-muted/50 rounded-lg border border-border">
+                                        <div className="p-5 bg-gradient-to-br from-muted/50 to-muted/30 rounded-xl border-2 border-border hover:border-primary/30 transition-all duration-300">
                                             <p className="text-sm text-muted-foreground leading-relaxed">
                                                 {companyData.services}
                                             </p>
@@ -311,11 +333,11 @@ export default function App() {
                                     </div>
                                 )}
                                 {companyData.references && (
-                                    <div>
-                                        <h4 className="font-semibold mb-3 flex items-center gap-2 text-foreground">
+                                    <div className="group">
+                                        <h4 className="font-semibold mb-3 flex items-center gap-2 text-foreground text-lg">
                                             📋 References
                                         </h4>
-                                        <div className="p-4 bg-muted/50 rounded-lg border border-border">
+                                        <div className="p-5 bg-gradient-to-br from-muted/50 to-muted/30 rounded-xl border-2 border-border hover:border-accent/30 transition-all duration-300">
                                             <p className="text-sm text-muted-foreground leading-relaxed">
                                                 {companyData.references}
                                             </p>
@@ -326,20 +348,20 @@ export default function App() {
                         </Card>
 
                         {/* AI Analysis & Metadata Card */}
-                        <Card className="mt-6 bg-card border-border">
+                        <Card className="mt-6 bg-card border-border card-hover animate-fade-in-up shadow-xl backdrop-blur-sm" style={{ animationDelay: '400ms', opacity: 0 }}>
                             <CardHeader>
-                                <CardTitle className="text-2xl flex items-center gap-2 text-foreground">
+                                <CardTitle className="text-3xl flex items-center gap-3 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
                                     🤖 AI Analysis Summary
                                 </CardTitle>
-                                <CardDescription className="text-muted-foreground">
+                                <CardDescription className="text-muted-foreground text-base mt-2">
                                     Generated insights and analysis metadata
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 {companyData.summary && (
                                     <div>
-                                        <h4 className="font-semibold mb-2 text-foreground">Executive Summary</h4>
-                                        <div className="p-4 bg-primary/10 border border-primary/30 rounded-lg">
+                                        <h4 className="font-semibold mb-3 text-foreground text-lg">Executive Summary</h4>
+                                        <div className="p-5 bg-gradient-to-br from-primary/10 to-accent/5 border-2 border-primary/30 rounded-xl hover:border-primary/50 transition-all duration-300">
                                             <p className="text-sm text-muted-foreground leading-relaxed">
                                                 {companyData.summary}
                                             </p>
@@ -347,17 +369,17 @@ export default function App() {
                                     </div>
                                 )}
                                 
-                                <div className="pt-4 border-t border-border">
-                                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                                        <span>Analysis Date</span>
-                                        <span>{companyData.timestamp ? new Date(companyData.timestamp).toLocaleDateString() : "Unknown"}</span>
+                                <div className="pt-4 border-t border-border/50">
+                                    <div className="flex items-center justify-between text-sm text-muted-foreground p-3 bg-muted/30 rounded-lg">
+                                        <span className="font-medium">Analysis Date</span>
+                                        <span className="font-mono">{companyData.timestamp ? new Date(companyData.timestamp).toLocaleDateString() : "Unknown"}</span>
                                     </div>
                                     {companyData.embedding && (
-                                        <details className="mt-2">
-                                            <summary className="cursor-pointer text-xs text-muted-foreground hover:text-foreground">
+                                        <details className="mt-3">
+                                            <summary className="cursor-pointer text-sm text-muted-foreground hover:text-primary transition-colors duration-200 p-2 hover:bg-muted/30 rounded-lg">
                                                 View Technical Data
                                             </summary>
-                                            <div className="mt-2 p-2 bg-muted rounded text-xs font-mono break-all">
+                                            <div className="mt-2 p-3 bg-muted/50 rounded-lg text-xs font-mono break-all border border-border">
                                                 Vector: [{companyData.embedding.slice(0, 5).join(", ")}...] ({companyData.embedding.length} dimensions)
                                             </div>
                                         </details>
