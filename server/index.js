@@ -45,6 +45,30 @@ app.post("/api/submit", async (req, res) => {
     }
 });
 
+// Helper function to clean MongoDB data (remove nulls from arrays and convert to strings)
+function cleanMongoData(data) {
+    if (data === null || data === undefined) return null;
+    
+    // If it's an array, filter out nulls and join
+    if (Array.isArray(data)) {
+        const cleaned = data
+            .flat()
+            .filter(item => item !== null && item !== undefined && (typeof item !== 'string' || item.trim() !== ''));
+        return cleaned.length > 0 ? cleaned.join(', ') : null;
+    }
+    
+    // If it's an object, recursively clean it
+    if (typeof data === 'object') {
+        const cleaned = {};
+        for (const [key, value] of Object.entries(data)) {
+            cleaned[key] = cleanMongoData(value);
+        }
+        return cleaned;
+    }
+    
+    return data;
+}
+
 // Fetch company data from MongoDB after workflow completes
 app.get("/api/company/:companyName", async (req, res) => {
     const companyName = req.params.companyName;
@@ -52,8 +76,8 @@ app.get("/api/company/:companyName", async (req, res) => {
     console.log(`[API] Searching for company: "${companyName}"`);
 
     try {
-        // Case-insensitive search using collation
-        const company = await BotData.findOne(
+        // Case-insensitive search using collation - fetch all fields
+        const rawCompany = await BotData.findOne(
             { name: companyName },
             {
                 collation: { locale: 'en', strength: 2 },
@@ -74,6 +98,7 @@ app.get("/api/company/:companyName", async (req, res) => {
                     cons: 1,
                     services: 1,
                     references: 1,
+                    topReferences: 1,
                     timestamp: 1,
                     embedding: 1,
                     summary: 1,
@@ -81,10 +106,35 @@ app.get("/api/company/:companyName", async (req, res) => {
             },
         );
 
-        if (!company) {
+        if (!rawCompany) {
             console.log(`[API] Company not found in database: "${companyName}"`);
             return res.status(404).json({ error: "Company not found" });
         }
+
+        // Clean the data and transform array fields
+        const cleanedTopReferences = cleanMongoData(rawCompany.topReferences);
+        const cleanedReferences = cleanMongoData(rawCompany.references);
+        
+        const company = {
+            name: cleanMongoData(rawCompany.name),
+            foundedYear: cleanMongoData(rawCompany.foundedYear),
+            industry: cleanMongoData(rawCompany.industry),
+            location: cleanMongoData(rawCompany.location),
+            size: cleanMongoData(rawCompany.size),
+            email: cleanMongoData(rawCompany.email),
+            phone: cleanMongoData(rawCompany.phone),
+            website: cleanMongoData(rawCompany.website),
+            linkedin: cleanMongoData(rawCompany.linkedin),
+            rating: cleanMongoData(rawCompany.rating),
+            reviewSource: cleanMongoData(rawCompany.reviewSource),
+            pros: cleanMongoData(rawCompany.pros),
+            cons: cleanMongoData(rawCompany.cons),
+            services: cleanMongoData(rawCompany.services),
+            references: cleanedTopReferences ?? cleanedReferences,
+            timestamp: rawCompany.timestamp,
+            embedding: rawCompany.embedding,
+            summary: cleanMongoData(rawCompany.summary),
+        };
 
         console.log(`[API] Found company:`, company.name);
         res.json(company);
