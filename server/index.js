@@ -21,17 +21,26 @@ const BotData = db.collection("BotData");
 // Submit form → send to n8n webhook
 app.post("/api/submit", async (req, res) => {
     const { name, email, companyName, companyUrl } = req.body;
+    
+    console.log(`[SUBMIT] Sending to n8n webhook:`, {
+        name,
+        email,
+        companyName,
+        companyUrl,
+    });
 
     try {
         // Send data to n8n webhook
-        await axios.post(process.env.N8N_WEBHOOK_URL, {
+        const response = await axios.post(process.env.N8N_WEBHOOK_URL, {
             name,
             email,
             companyName,
             companyUrl,
         });
+        console.log(`[SUBMIT] n8n webhook response status:`, response.status);
         res.json({ status: "submitted" });
     } catch (err) {
+        console.error(`[SUBMIT] Error sending to n8n:`, err.message);
         res.status(500).json({ error: err.message });
     }
 });
@@ -39,11 +48,15 @@ app.post("/api/submit", async (req, res) => {
 // Fetch company data from MongoDB after workflow completes
 app.get("/api/company/:companyName", async (req, res) => {
     const companyName = req.params.companyName;
+    
+    console.log(`[API] Searching for company: "${companyName}"`);
 
     try {
+        // Case-insensitive search using collation
         const company = await BotData.findOne(
             { name: companyName },
             {
+                collation: { locale: 'en', strength: 2 },
                 projection: {
                     _id: 0,
                     name: 1,
@@ -68,11 +81,15 @@ app.get("/api/company/:companyName", async (req, res) => {
             },
         );
 
-        if (!company)
+        if (!company) {
+            console.log(`[API] Company not found in database: "${companyName}"`);
             return res.status(404).json({ error: "Company not found" });
+        }
 
+        console.log(`[API] Found company:`, company.name);
         res.json(company);
     } catch (err) {
+        console.error(`[API] Error fetching company:`, err.message);
         res.status(500).json({ error: err.message });
     }
 });

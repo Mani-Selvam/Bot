@@ -24,20 +24,25 @@ export default function App() {
 
     // Poll MongoDB until data is available
     const fetchCompany = async () => {
-        const maxAttempts = 10; // total 20 seconds
+        const maxAttempts = 15; // total 30 seconds (enough for 10-15s n8n processing)
         let attempts = 0;
+        console.log(`[Frontend] Starting to poll for company: "${form.companyName}"`);
+        
         while (attempts < maxAttempts) {
             try {
+                console.log(`[Frontend] Polling attempt ${attempts + 1}/${maxAttempts}`);
                 const res = await axios.get(
                     `/api/company/${encodeURIComponent(form.companyName)}`
                 );
+                console.log(`[Frontend] Company data found!`, res.data);
                 return res.data;
-            } catch {
+            } catch (error) {
+                console.log(`[Frontend] Attempt ${attempts + 1} failed:`, error.response?.status || error.message);
                 await new Promise((r) => setTimeout(r, 2000));
                 attempts++;
             }
         }
-        throw new Error("Company data not found after 20s");
+        throw new Error("Company data not found after 30 seconds. Please check if your n8n workflow is activated and storing data correctly.");
     };
 
     const handleSubmit = async (e) => {
